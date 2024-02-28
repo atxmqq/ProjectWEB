@@ -20,6 +20,15 @@ export class LoginComponent {
 
   constructor(private http: HttpClient, private router: Router) { }
 
+  ngOnInit() {
+    // เช็คว่ามีชื่อผู้ใช้ที่ส่งมาจากหน้าสมัครสมาชิกหรือไม่
+    const username = history.state.username;
+    if (username) {
+      // เติมชื่อผู้ใช้ในช่อง username โดยอัตโนมัติ
+      this.loginObj.username = username;
+    }
+  }
+
   loGin() {
     if (this.loginObj.username && this.loginObj.password) {
       console.log("Sending data:", this.loginObj); // แสดงข้อมูลที่จะถูกส่งไปยัง URL
@@ -32,7 +41,7 @@ export class LoginComponent {
         }
       });
     } else {
-      alert('กรุณาใส่ข้อมูลให้ครบ')
+      alert('กรุณาใส่ข้อมูลให้ครบถ้วน')
     }
   }
 
