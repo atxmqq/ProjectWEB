@@ -1,31 +1,39 @@
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
+import { FormsModule } from '@angular/forms';
+
 
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [RouterLink, HttpClientModule],
+  imports: [RouterLink, HttpClientModule, FormsModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
 export class LoginComponent {
   loginObj: any = {
-    "email": "",
+    "username": "",
     "password": ""
   };
 
   constructor(private http: HttpClient, private router: Router) { }
 
   loGin() {
-    if (this.loginObj.email && this.loginObj.password) {
+    if (this.loginObj.username && this.loginObj.password) {
+      console.log("Sending data:", this.loginObj); // แสดงข้อมูลที่จะถูกส่งไปยัง URL
       this.http.post('http://localhost:3000/user/login', this.loginObj).subscribe((res: any) => {
-        if (res.result) {
-          localStorage.setItem('token', res.data.token);
-          this.router.navigateByUrl('/homepage');
+        if (res.result) { // ใช้คุณสมบัติ success ที่ได้รับเพื่อตรวจสอบ
+          localStorage.setItem('token', res.token); // บันทึก token ลงใน localStorage
+          this.router.navigateByUrl('/homepage'); // เปลี่ยนเส้นทางไปยังหน้า homepage
+        } else {
+          alert('Username or Password is wrong!!!'); // แจ้งเตือนว่าชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง
         }
       });
+    } else {
+      alert('กรุณาใส่ข้อมูลให้ครบ')
     }
   }
+
 }

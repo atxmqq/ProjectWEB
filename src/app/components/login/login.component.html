@@ -6,12 +6,14 @@
                 <h1 style="color: rgb(255, 148, 184);font-size: 50px;">Login</h1>
                 <p style="color: aliceblue;margin-top: -25px;">Enter your information</p>
 
-                <input type="email" placeholder="Email"
+                <input type="text" placeholder="Username" [(ngModel)]="loginObj.username"
                     style="padding: 10px;margin-bottom: 10px;width: 280px;height: 30px; border-radius: 5px;border: 1px solid #ccc;margin-top: 30px;">
-                <input type="password" placeholder="Password"
+                <input type="password" placeholder="Password" [(ngModel)]="loginObj.password"
                     style="padding: 10px;margin-bottom: 10px;width: 280px;height: 30px; border-radius: 5px;border: 1px solid #ccc;margin-top: 30px;">
-                <button
+
+                <button (click)="loGin()"
                     style="padding: 10px 20px;background-color: rgb(255, 148, 184);color: white;border: none;border-radius: 5px;cursor: pointer;margin-top: 20px;">Login</button>
+
 
                 <div style="display: flex;flex-direction: row;">
                     <p style="color: aliceblue;">Don't have an account?</p>
