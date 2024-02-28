@@ -1,0 +1,36 @@
+<div class="body">
+    <div style="display: flex;flex-direction: row;justify-content: space-between;">
+        <div style="width: 20%; display: flex; align-items: center; margin-left: 30px;flex-direction: column;">
+            <img src="/assets/img/icon/anidex.png" alt="" style="width: 50%;">
+            <!-- <p style="font-size: 80%; font-weight: bold; color: white;">ANI DEX</p> -->
+        </div>
+        <div
+            style="width: 35%; display: flex; align-items:center; justify-content: space-between; color: white;margin-right: 50px;">
+            <button mat-button style="font-weight: bolder;font-size: 20px;color: rgb(255, 148, 184);">HOME</button>
+            <button mat-button style="font-weight: bolder;font-size: 20px;color: aliceblue;">VOTE</button>
+            <button mat-button style="font-weight: bolder;font-size: 20px;color: rgb(255, 148, 184);">Top 10</button>
+            <button mat-button style="font-weight: bolder;font-size: 20px;color: aliceblue;"
+                [routerLink]="['/']">Logout</button>
+            <img src="/assets/img/icon/profile.png" alt="" style="width: 10%;" [routerLink]="['/profile']">
+        </div>
+    </div>
+    <div style="display: flex;width: 1000px;margin-left: 230px;">
+        <div style="display: flex;flex-direction: column;">
+            <div style="display: flex;font-weight: bolder;font-size: 90px;">
+                <p style="color: aliceblue;">ANIME</p>
+                <p style="color: rgb(255, 148, 184); margin-left: 10px;">VOTE</p>
+            </div>
+            <div style="color: aliceblue;width: 450px;margin-left: 30px;font-size: 20px;margin-top: -90px;">
+                <p>ท่านสามารถโหวตอนิเมะที่ท่านชื่นชอบได้
+                    และท่านสามารถอัพโหลดรูปภาพอนิเมะที่ท่านชื่นชอบเพื่อให้สมาชิกท่านอื่นช่วยกันโหวตได้</p>
+                <p>ร่วมกันโหวต "อนิเมะยอดนิยมแห่งปี 2024"</p>
+                <button
+                    style="padding: 10px 20px;background-color: rgb(255, 148, 184);color: white;border: none;border-radius: 5px;cursor: pointer;width: 200px;font-weight: bolder;"
+                    [routerLink]="['/homepage']">Get Start</button>
+                <button
+                    style="padding: 10px 20px;background-color: white;color: rgb(255, 148, 184);border: none;border-radius: 5px;cursor: pointer;width: 150px;font-weight: bolder;margin-left: 80px;"
+                    [routerLink]="['/homepage']">Upload</button>
+            </div>
+        </div>
+    </div>
+</div>
