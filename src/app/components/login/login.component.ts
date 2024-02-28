@@ -21,7 +21,7 @@ export class LoginComponent {
     if(this.loginObj.email && this.loginObj.password){
       this.http.post('http://localhost:3000/user/login', this.loginObj).subscribe((res: any) => {
         if(res.result){
-          localStorage.setItem
+          localStorage.setItem('token', res.data.token)
         }
       });
     }
