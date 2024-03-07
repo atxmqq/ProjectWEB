@@ -26,7 +26,7 @@ export class HomepageComponent {
       console.log('Token:', token);
 
       try {
-        const url = `http://localhost:3000/user/${token}`;
+        const url = `https://backend-projectanidex.onrender.com/user/${token}`;
         this.http.get(url).subscribe((data: any) => {
           if (data) {
             this.userdata = [data];

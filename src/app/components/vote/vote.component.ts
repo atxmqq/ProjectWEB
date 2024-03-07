@@ -44,7 +44,7 @@ export class VoteComponent implements OnInit {
     if (token) {
       console.log('Token:', token);
       try {
-        const url = `http://localhost:3000/user/${token}`;
+        const url = `https://backend-projectanidex.onrender.com/user/${token}`;
         this.http.get(url).subscribe((data: any) => {
           if (data) {
             this.userdata = [data];
@@ -64,7 +64,7 @@ export class VoteComponent implements OnInit {
   }
 
   getImageUrl() {
-    const url = 'http://localhost:3000/voteimage';
+    const url = 'https://backend-projectanidex.onrender.com/voteimage';
     this.http.get<ImageGetRespon[]>(url).subscribe((data: ImageGetRespon[]): void => {
       if (data && data.length > 0) {
         this.shuffledImages = this.shuffleImages(data);
@@ -114,7 +114,7 @@ export class VoteComponent implements OnInit {
 
 
   vote(winID: any, loseID: any, winScore: number, loseScore: number) {
-    const urlvote = 'http://localhost:3000/anidexvote/score';
+    const urlvote = 'https://backend-projectanidex.onrender.com/anidexvote/score';
     const token = localStorage.getItem('token');
 
     if (token) {

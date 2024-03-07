@@ -32,7 +32,7 @@ export class LoginComponent {
   loGin() {
     if (this.loginObj.username && this.loginObj.password) {
       console.log("Sending data:", this.loginObj); // แสดงข้อมูลที่จะถูกส่งไปยัง URL
-      this.http.post('http://localhost:3000/user/login', this.loginObj).subscribe((res: any) => {
+      this.http.post('https://backend-projectanidex.onrender.com/user/login', this.loginObj).subscribe((res: any) => {
         if (res.result) { // ใช้คุณสมบัติ success ที่ได้รับเพื่อตรวจสอบ
           localStorage.setItem('token', res.token); // บันทึก token ลงใน localStorage
           this.router.navigateByUrl('/'); // เปลี่ยนเส้นทางไปยังหน้า homepage

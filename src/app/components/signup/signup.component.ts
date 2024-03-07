@@ -38,7 +38,7 @@ export class SignupComponent {
         return;
       }
       // ส่งคำขอสมัครสมาชิกไปยังเซิร์ฟเวอร์
-      this.http.post('http://localhost:3000/user/register', this.signupObj).subscribe((res: any) => {
+      this.http.post('https://backend-projectanidex.onrender.com/user/register', this.signupObj).subscribe((res: any) => {
         if (res.success) {
           alert('Register successful!');
           this.router.navigateByUrl('/login');
