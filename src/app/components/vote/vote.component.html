@@ -1,0 +1,57 @@
+<div class="body">
+    <div style="display: flex;flex-direction: row;justify-content: space-between;">
+        <div style="width: 20%; display: flex; align-items: center; margin-left: 30px;flex-direction: column;">
+            <img src="/assets/img/icon/LogoAnidex.png" alt="" style="width: 50%;">
+        </div>
+        <div
+            style="width: 35%; display: flex; align-items:center; justify-content: space-between; color: white;margin-right: 50px;">
+            <button mat-button style="font-weight: bolder;font-size: 20px;color: rgb(255, 148, 184);"
+                [routerLink]="['/']">HOME</button>
+            <button mat-button style="font-weight: bolder;font-size: 20px;color: aliceblue;"
+                [routerLink]="['/vote']">VOTE</button>
+            <button mat-button style="font-weight: bolder;font-size: 20px;color: rgb(255, 148, 184);">Top
+                10</button>
+            <img *ngFor="let user of userdata"
+                [src]="user.imguser ? user.imguser : 'https://cdn-icons-png.flaticon.com/512/3541/3541871.png'" alt=""
+                class="profileimg" [routerLink]="['/profile']">
+        </div>
+    </div>
+    <div style="display: flex;justify-content: center;">
+        <div style="display: flex;width: 100%;flex-direction: column;">
+            <!-- <p style="color: aliceblue;font-size: 40px;margin-top: -30px;margin-left: 100px;" [routerLink]="['/']">
+                <<<< </p> -->
+            <div style="display: flex; justify-content: center; align-items: center; margin-top: 50px;">
+                <div *ngFor="let img of this.shuffledImages; let i = index">
+                    <div *ngIf=" i === 0 " style="display: flex; justify-content: center;">
+                        <div style="display: flex;flex-direction: column;align-items: center;">
+                            <img src="{{img.imganime}}"
+                                style="width: 280px; height: 380px; margin: 0 18px; border-radius: 20px; border: 5px solid red;"
+                                (click)="clickImages('red', img.pid, img.score, shuffledImages[i+1].pid, shuffledImages[i+1].score)"
+                                *ngIf="redImageVisible">
+                            <!-- ส่ง pid, score ชนะ และ แพ้ไป  -->
+                            <div *ngIf="redImageVisible">
+                                <p style="color: white;">Total Score: {{totalScore[img.pid]}}</p>
+                            </div>
+                        </div>
+
+                        <div style="display: flex; margin-left: 100px;margin-right: 100px;font-size: 20px; align-items: center;"
+                            *ngIf="redImageVisible && blueImageVisible">
+                            <h1 style="visibility: visible;color: red;">V</h1>
+                            <h1 style="visibility: visible;color: blue;">S</h1>
+                        </div>
+                        <div style="display: flex;flex-direction: column;align-items: center;">
+                            <img *ngIf="shuffledImages[i+1]?.imganime && blueImageVisible"
+                                src="{{shuffledImages[i+1].imganime}}"
+                                style="width: 280px; height: 380px; margin: 0 18px; border-radius: 20px;border: 5px solid blue;"
+                                (click)="clickImages('blue', shuffledImages[i+1].pid, shuffledImages[i+1].score, img.pid, img.score)">
+                            <div *ngIf="blueImageVisible">
+                                <p style="color: white;">Total Score: {{totalScore[shuffledImages[i+1].pid]}}</p>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

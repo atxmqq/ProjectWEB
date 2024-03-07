@@ -1,5 +1,13 @@
+img {
+    transition: all 0.3s ease;
+}
+
+img:hover {
+    transform: scale(1.1);
+}
+
 .body {
-    background-image: url(/assets/img/background/MainBackground.png);
+    background-image: url(/assets/img/background/Vote.png);
     background-position: 0px;
     background-size: cover;
     background-attachment: fixed;
@@ -10,3 +18,4 @@
     width: 13%;
     border-radius: 50%;
 }
+

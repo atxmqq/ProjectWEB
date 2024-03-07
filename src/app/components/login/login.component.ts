@@ -35,7 +35,7 @@ export class LoginComponent {
       this.http.post('http://localhost:3000/user/login', this.loginObj).subscribe((res: any) => {
         if (res.result) { // ใช้คุณสมบัติ success ที่ได้รับเพื่อตรวจสอบ
           localStorage.setItem('token', res.token); // บันทึก token ลงใน localStorage
-          this.router.navigateByUrl('/homepage'); // เปลี่ยนเส้นทางไปยังหน้า homepage
+          this.router.navigateByUrl('/'); // เปลี่ยนเส้นทางไปยังหน้า homepage
         } else {
           alert('Username or Password is wrong!!!'); // แจ้งเตือนว่าชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง
         }
