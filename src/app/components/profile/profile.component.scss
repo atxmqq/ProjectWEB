@@ -1,0 +1,58 @@
+ /* กำหนดให้รูปภาพเป็นวงกลม */
+ .circle-img {
+     width: 150px;
+     /* ขนาดของวงกลม */
+     height: 150px;
+     /* ขนาดของวงกลม */
+     border-radius: 50%;
+     /* ทำให้มีรูปร่างเป็นวงกลม */
+     overflow: hidden;
+     /* ทำให้ส่วนที่เกินขอบวงกลมถูกตัดทิ้ง */
+ }
+
+ /* กำหนดขนาดของรูปภาพ */
+ .circle-img img {
+     width: 100%;
+     /* ปรับขนาดให้เต็มกับขนาดของ div */
+     height: auto;
+     /* ให้ความสูงปรับให้สอดคล้องกับความกว้าง */
+ }
+
+ .popup {
+     width: 400px;
+     background-color: aliceblue;
+     border-radius: 6px;
+     position: absolute;
+     top: 50%;
+     left: 50%;
+     transform: translate(-50%, -50%) scale(0.1);
+     text-align: center;
+     padding: 0 30px 30px;
+     color: #333;
+     visibility: hidden;
+     transition: transform 0.4s, top 0.4s;
+     z-index: 9999;
+     /* ให้ป้อปอัพอยู่ด้านหน้า */
+ }
+
+ .open-popup {
+     visibility: visible;
+     top: 50%;
+     transform: translate(-50%, -50%) scale(1);
+
+ }
+
+
+ .body {
+     background-image: url(/assets/img/background/MainBackground.png);
+     background-position: 0px;
+     background-size: cover;
+     background-attachment: fixed;
+     height: 840px;
+ }
+
+
+ .profileimg {
+     width: 13%;
+     border-radius: 50%;
+ }

@@ -1,0 +1,47 @@
+.container {
+    position: relative;
+}
+
+// img {
+//     transition: all 0.3s ease;
+// }
+
+// img:hover {
+//     transform: scale(1.1);
+// }
+
+.circle {
+    position: absolute;
+    top: 10px;
+    left: 150px;
+    background-color: blue;
+    color: white;
+    padding: 5px;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s ease;
+    transform-origin: center;
+    font-weight: bolder;
+}
+
+// .container:hover img {
+//     transform: scale(1.1);
+// }
+
+// .container:hover .circle {
+//     transform: scale(1.1);
+// }
+.score {
+    position: absolute;
+    bottom: 0; /* ตั้งค่าให้อยู่ด้านล่างของภาพ */
+    left: 50%; /* ตั้งค่าให้อยู่ตรงกลาง */
+    transform: translateX(-50%); /* ปรับตำแหน่งตามแกน X เพื่อให้อยู่ตรงกลาง */
+    color: white;
+    font-weight: bold;
+    z-index: 1;
+    background-color: blue;
+}

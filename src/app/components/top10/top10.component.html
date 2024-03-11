@@ -1,0 +1,80 @@
+<div style="display: flex;flex-direction: row;justify-content: space-between;">
+    <div style="width: 20%; display: flex; align-items: center; margin-left: 30px;flex-direction: column;">
+        <img src="/assets/img/icon/anidex.png" alt=""style="width: 50%;">
+    </div>
+    <div style="width: 35%; display: flex; align-items:center; justify-content: space-between; color: white;margin-right: 50px;">
+        <button mat-button style="font-weight: bolder;font-size: 20px;color: rgb(255, 148, 184);"[routerLink]="['/homepage']">HOME</button>
+        <button mat-button style="font-weight: bolder;font-size: 20px;color: aliceblue;"[routerLink]="['/vote']">VOTE</button>
+        <button mat-button style="font-weight: bolder;font-size: 20px;color: rgb(255, 148, 184);"[routerLink]="['/top10']">Top 10</button>
+        <button mat-button style="font-weight: bolder;font-size: 20px;color: aliceblue;" [routerLink]="['/']">Logout</button>
+        <img src="/assets/img/icon/profile.png" alt=""style="width: 10%;"[routerLink]="['/profile']" >
+    </div>
+</div>
+
+<div style="display: flex; flex-wrap: wrap; justify-content: center; margin-top: 15px;">
+    <div style="display: flex;">
+        <!-- ลูปสร้างรูปภาพและหมายเลข -->
+        <!-- เริ่มต้นลูป -->
+        <!-- สมมติว่าคุณมีรูปภาพ 5 รูป -->
+        <!-- ให้เพิ่มรูปและหมายเลขตามลำดับ -->
+        <!-- ลูปสร้างรูปและหมายเลข -->
+        <!-- ใช้การวนลูปเพื่อสร้างรูปภาพและหมายเลข -->
+        <!-- เริ่มต้นลูป -->
+        <!-- สำหรับตัวแปร i ตั้งแต่ 1 ถึง 5 -->
+        <!-- รูปภาพ -->
+        <div class="container">
+            <img src="https://www.ubuy.co.th/productimg/?image=aHR0cHM6Ly9tLm1lZGlhLWFtYXpvbi5jb20vaW1hZ2VzL0kvODExaXhIeEF4aEwuX0FDX1NMMTUwMF8uanBn.jpgd" alt="" style="width: 180px; height: 280px; margin: 0 18px; border-radius: 20px;border: 5px solid blue;">
+            <div class="circle">1</div>
+            <div class="score">score : 9000</div>
+        </div>
+        <div class="container">
+            <img src="https://www.ubuy.co.th/productimg/?image=aHR0cHM6Ly9tLm1lZGlhLWFtYXpvbi5jb20vaW1hZ2VzL0kvODExaXhIeEF4aEwuX0FDX1NMMTUwMF8uanBn.jpgd" alt="" style="width: 180px; height: 280px; margin: 0 18px; border-radius: 20px;border: 5px solid blue;">
+            <div class="circle">2</div>
+            <div class="score">score : 8500</div>
+        </div>
+        <div class="container">
+            <img src="https://www.ubuy.co.th/productimg/?image=aHR0cHM6Ly9tLm1lZGlhLWFtYXpvbi5jb20vaW1hZ2VzL0kvODExaXhIeEF4aEwuX0FDX1NMMTUwMF8uanBn.jpgd" alt="" style="width: 180px; height: 280px; margin: 0 18px; border-radius: 20px;border: 5px solid blue;">
+            <div class="circle">3</div>
+            <div class="score">score : 8499</div>
+        </div>
+        <div class="container">
+            <img src="https://www.ubuy.co.th/productimg/?image=aHR0cHM6Ly9tLm1lZGlhLWFtYXpvbi5jb20vaW1hZ2VzL0kvODExaXhIeEF4aEwuX0FDX1NMMTUwMF8uanBn.jpgd" alt="" style="width: 180px; height: 280px; margin: 0 18px; border-radius: 20px;border: 5px solid blue;">
+            <div class="circle">4</div>
+            <div class="score">score : 7000</div>
+        </div>
+        <div class="container">
+            <img src="https://www.ubuy.co.th/productimg/?image=aHR0cHM6Ly9tLm1lZGlhLWFtYXpvbi5jb20vaW1hZ2VzL0kvODExaXhIeEF4aEwuX0FDX1NMMTUwMF8uanBn.jpgd" alt="" style="width: 180px; height: 280px; margin: 0 18px; border-radius: 20px;border: 5px solid blue;">
+            <div class="circle">5</div>
+            <div class="score">score : 6800</div>
+        </div>
+    </div>
+    
+    <div style="display: flex;margin-top: 10px;">
+        <div class="container">
+            <img src="https://www.ubuy.co.th/productimg/?image=aHR0cHM6Ly9tLm1lZGlhLWFtYXpvbi5jb20vaW1hZ2VzL0kvODExaXhIeEF4aEwuX0FDX1NMMTUwMF8uanBn.jpgd" alt="" style="width: 180px; height: 280px; margin: 0 18px; border-radius: 20px;border: 5px solid blue;">
+            <div class="circle">6</div>
+            <div class="score">score : 6666</div>
+        </div>
+        <div class="container">
+            <img src="https://www.ubuy.co.th/productimg/?image=aHR0cHM6Ly9tLm1lZGlhLWFtYXpvbi5jb20vaW1hZ2VzL0kvODExaXhIeEF4aEwuX0FDX1NMMTUwMF8uanBn.jpgd" alt="" style="width: 180px; height: 280px; margin: 0 18px; border-radius: 20px;border: 5px solid blue;">
+            <div class="circle">7</div>
+            <div class="score">score : 6543</div>
+        </div>
+        <div class="container">
+            <img src="https://www.ubuy.co.th/productimg/?image=aHR0cHM6Ly9tLm1lZGlhLWFtYXpvbi5jb20vaW1hZ2VzL0kvODExaXhIeEF4aEwuX0FDX1NMMTUwMF8uanBn.jpgd" alt="" style="width: 180px; height: 280px; margin: 0 18px; border-radius: 20px;border: 5px solid blue;">
+            <div class="circle">8</div>
+            <div class="score">score : 5000</div>
+        </div>
+        <div class="container">
+            <img src="https://www.ubuy.co.th/productimg/?image=aHR0cHM6Ly9tLm1lZGlhLWFtYXpvbi5jb20vaW1hZ2VzL0kvODExaXhIeEF4aEwuX0FDX1NMMTUwMF8uanBn.jpgd" alt="" style="width: 180px; height: 280px; margin: 0 18px; border-radius: 20px;border: 5px solid blue;">
+            <div class="circle">9</div>
+            <div class="score">score : 4443</div>
+        </div>
+        <div class="container">
+            <img src="https://www.ubuy.co.th/productimg/?image=aHR0cHM6Ly9tLm1lZGlhLWFtYXpvbi5jb20vaW1hZ2VzL0kvODExaXhIeEF4aEwuX0FDX1NMMTUwMF8uanBn.jpgd" alt="" style="width: 180px; height: 280px; margin: 0 18px; border-radius: 20px;border: 5px solid blue;">
+            <div class="circle">10</div>
+            <div class="score">score : 3333</div>
+        </div>
+    </div>
+</div>
+
