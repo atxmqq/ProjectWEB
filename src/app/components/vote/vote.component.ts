@@ -7,13 +7,17 @@ import { FormsModule } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { ScoreTotal, UserGetRespon } from '../../../../model/UserGetRespon';
 import { MatButtonModule } from '@angular/material/button';
+import { DatePipe } from '@angular/common';
+
 
 @Component({
   selector: 'app-vote',
   standalone: true,
   imports: [RouterLink, CommonModule, HttpClientModule, FormsModule, MatButtonModule],
   templateUrl: './vote.component.html',
-  styleUrls: ['./vote.component.scss']
+  styleUrls: ['./vote.component.scss'],
+  providers: [DatePipe]
+
 })
 export class VoteComponent implements OnInit {
   userdata: UserGetRespon[] = [];
@@ -35,7 +39,7 @@ export class VoteComponent implements OnInit {
   votedImagesIds: Set<number> = new Set<number>();
   selectedImages: ImageGetRespon[] = [];
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private datePipe: DatePipe) { }
 
   ngOnInit() {
     this.getImageUrl();
@@ -115,6 +119,8 @@ export class VoteComponent implements OnInit {
 
   vote(winID: any, loseID: any, winScore: number, loseScore: number) {
     const urlvote = 'https://backend-projectanidex.onrender.com/anidexvote/score';
+    const updatescoreurl = 'http://localhost:3000/anidexvote/updatescore';
+
     const token = localStorage.getItem('token');
 
     if (token) {
@@ -126,8 +132,53 @@ export class VoteComponent implements OnInit {
             console.log('UserID:', userID);
 
             try {
-              const Win = await this.http.post(urlvote, { uid_fk: userID, pid_fk: winID, winlose: 1, score: winScore, vote_date: new Date() }).toPromise();
-              const Lose = await this.http.post(urlvote, { uid_fk: userID, pid_fk: loseID, winlose: 0, score: loseScore, vote_date: new Date() }).toPromise();
+              const voteDate = this.datePipe.transform(new Date(), 'yyyy-MM-dd HH:mm:ss');
+
+              const Win = await this.http.post(urlvote, { uid_fk: userID, pid_fk: winID, winlose: 1, score: winScore, vote_date: voteDate }).toPromise();
+              const Lose = await this.http.post(urlvote, { uid_fk: userID, pid_fk: loseID, winlose: 0, score: loseScore, vote_date: voteDate }).toPromise();
+
+              this.totalScore[winID] = (this.totalScore[winID] || 0) + winScore;
+              this.totalScore[loseID] = (this.totalScore[loseID] || 0) + loseScore;
+
+
+
+              // สร้าง URL สำหรับอัปเดตคะแนนโดยใช้ PID (ไอดีของรูปภาพ)
+              const updatescoreurl = 'http://localhost:3000/anidexvote/updatescore/' + winID; // หรือ loseID ตามที่ต้องการ
+
+              // สร้างข้อมูลที่จะส่งไปยังเซิร์ฟเวอร์ (ในที่นี้คือคะแนนที่ต้องการอัปเดต)
+              const scoreData = { score: this.totalScore[winID] }; // หรือ loseScore ตามที่ต้องการ
+
+              // ส่งคำขอ PUT โดยใช้ HttpClient
+              this.http.put(updatescoreurl, scoreData).subscribe(
+                (response) => {
+                  console.log('Score updated successfully:', response);
+                  // ทำสิ่งที่คุณต้องการหลังจากอัปเดตคะแนนสำเร็จ
+                },
+                (error) => {
+                  console.error('Error updating score:', error);
+                  // จัดการข้อผิดพลาดที่เกิดขึ้นในการอัปเดตคะแนน
+                }
+              );
+
+              // สร้าง URL สำหรับอัปเดตคะแนนโดยใช้ PID (ไอดีของรูปภาพที่แพ้)
+              const updatescoreurllose = 'http://localhost:3000/anidexvote/updatescore/' + loseID;
+
+              // สร้างข้อมูลที่จะส่งไปยังเซิร์ฟเวอร์ (ในที่นี้คือคะแนนที่ต้องการอัปเดต)
+              const scoreDatalose = { score: this.totalScore[loseID] };
+
+              // ส่งคำขอ PUT โดยใช้ HttpClient
+              this.http.put(updatescoreurllose, scoreDatalose).subscribe(
+                (response) => {
+                  console.log('Score updated successfully:', response);
+                  // ทำสิ่งที่คุณต้องการหลังจากอัปเดตคะแนนสำเร็จ
+                },
+                (error) => {
+                  console.error('Error updating score:', error);
+                  // จัดการข้อผิดพลาดที่เกิดขึ้นในการอัปเดตคะแนน
+                }
+              );
+
+
 
               console.log(Win);
               console.log(Lose);
@@ -184,9 +235,10 @@ export class VoteComponent implements OnInit {
 
 
   calvote(winID: any, loseID: any, winScore: number, loseScore: number): void {
-    const { winNewscore, loseNewscore } = this.calculateElo(winScore, loseScore); //เรียกใช้ calculateElo เพื่อส่ง winScore, loseScore ไปคำนวณ
-    this.vote(winID, loseID, winNewscore, loseNewscore); //เรียนใช้ vote เพื่อส่ง winNewscore, loseNewscore ใหม่ตาม winID, loseID,
+    const { winNewscore, loseNewscore } = this.calculateElo(winScore, loseScore); // เรียกใช้ calculateElo เพื่อคำนวณคะแนนใหม่
+    this.vote(winID, loseID, winNewscore, loseNewscore); // เรียกใช้ vote เพื่อส่งคะแนนใหม่ไปยังเซิร์ฟเวอร์
   }
+
 
 
   //นำ score มาเช็คว่าเท่าไหร่ควรจะให้ KFactor ไปคำนวณ

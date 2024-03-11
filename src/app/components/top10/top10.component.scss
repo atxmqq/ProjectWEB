@@ -37,11 +37,27 @@
 // }
 .score {
     position: absolute;
-    bottom: 0; /* ตั้งค่าให้อยู่ด้านล่างของภาพ */
-    left: 50%; /* ตั้งค่าให้อยู่ตรงกลาง */
-    transform: translateX(-50%); /* ปรับตำแหน่งตามแกน X เพื่อให้อยู่ตรงกลาง */
+    bottom: 0;
+    /* ตั้งค่าให้อยู่ด้านล่างของภาพ */
+    left: 50%;
+    /* ตั้งค่าให้อยู่ตรงกลาง */
+    transform: translateX(-50%);
+    /* ปรับตำแหน่งตามแกน X เพื่อให้อยู่ตรงกลาง */
     color: white;
     font-weight: bold;
     z-index: 1;
     background-color: blue;
+}
+
+.body {
+    background-image: url(/assets/img/background/MainBackground.png);
+    background-position: 0px;
+    background-size: cover;
+    background-attachment: fixed;
+    height: 110%;
+}
+
+.profileimg {
+    width: 13%;
+    border-radius: 50%;
 }

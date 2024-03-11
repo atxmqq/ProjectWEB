@@ -70,11 +70,9 @@
 
             <div style="display: flex;margin-top: 15px;justify-content: center;">
                 <ng-container *ngFor="let img of imageUrl; let i = index">
-                    <ng-container *ngIf="i < 5 || i == 5 || i > 5">
-                        <ng-container *ngFor="let user of userdata">
-                            <img *ngIf="user.uid === img.uid" src="{{img.imganime}}" alt=""
-                                style="width: 180px; height: 280px; margin: 0 18px; border-radius: 20px;">
-                        </ng-container>
+                    <ng-container *ngFor="let user of userdata">
+                        <img *ngIf="user.uid === img.uid" src="{{img.imganime}}" alt=""
+                            style="width: 180px; height: 280px; margin: 0 18px; border-radius: 20px;">
                     </ng-container>
                 </ng-container>
             </div>

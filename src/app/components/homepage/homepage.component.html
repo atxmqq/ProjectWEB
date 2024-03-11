@@ -43,11 +43,13 @@
                 <button mat-button style="font-weight: bolder;font-size: 20px;color: rgb(255, 148, 184);">HOME</button>
                 <button mat-button style="font-weight: bolder;font-size: 20px;color: aliceblue;"
                     [routerLink]="['/vote']">VOTE</button>
-                <button mat-button style="font-weight: bolder;font-size: 20px;color: rgb(255, 148, 184);">Top
+                <button mat-button style="font-weight: bolder;font-size: 20px;color: rgb(255, 148, 184);"
+                    [routerLink]="['/top10']">Top
                     10</button>
                 <button mat-button style="font-weight: bolder;font-size: 20px;color: aliceblue;"
                     (click)="logOut()">Logout</button>
-                <img *ngFor="let user of userdata" [src]="user.imguser ? user.imguser : 'https://cdn-icons-png.flaticon.com/512/3541/3541871.png'"
+                <img *ngFor="let user of userdata"
+                    [src]="user.imguser ? user.imguser : 'https://cdn-icons-png.flaticon.com/512/3541/3541871.png'"
                     alt="" class="profileimg" [routerLink]="['/profile']">
 
             </div>
