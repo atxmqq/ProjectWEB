@@ -17,12 +17,14 @@ import { ImageGetRespon } from '../../../../model/ImageGetRespon';
 export class Top10Component {
   userdata: UserGetRespon[] = [];
   flag: boolean = false; // เพิ่มตัวแปร flag เพื่อตรวจสอบการมี token
+  showPreviousImages: boolean = false; // สร้างตัวแปร showPreviousImages เพื่อควบคุมการแสดงผลของรูปภาพก่อนหน้า
 
   constructor(private http: HttpClient, private router: Router) { }
 
   ngOnInit() {
 
     this.getImageUrl();
+    this.getImageUrlprevious();
 
     const token = localStorage.getItem('token');
     if (token) {
@@ -56,6 +58,8 @@ export class Top10Component {
 
 
   imageUrl: ImageGetRespon[] = [];
+  imageUrlprevious: ImageGetRespon[] = [];
+
 
   getImageUrl() {
     const url = 'https://backend-projectanidex.onrender.com/image';
@@ -69,5 +73,23 @@ export class Top10Component {
       this.imageUrl.sort((a, b) => b.score - a.score);
 
     });
+  }
+
+  getImageUrlprevious() {
+    const url = 'http://localhost:3000/image/previous';
+    this.http.get<ImageGetRespon[]>(url).subscribe((data: ImageGetRespon[]): void => {
+      if (data && data.length > 0) {
+        this.imageUrlprevious = data;
+      } else {
+        console.log('No image data found');
+      }
+      // จัดเรียง imageUrl โดยให้คะแนนสูงสุดมาก่อน
+      this.imageUrlprevious.sort((a, b) => b.score - a.score);
+
+    });
+  }
+
+  toggleImages() {
+    this.showPreviousImages = !this.showPreviousImages; // เปลี่ยนค่าเมื่อกดปุ่ม
   }
 }
