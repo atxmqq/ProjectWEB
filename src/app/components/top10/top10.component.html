@@ -23,14 +23,15 @@
 
     <div style="display: flex; flex-wrap: wrap; justify-content: center; margin-top: 15px;">
         <div style="display: flex;">
-            <div style="display: grid; grid-template-columns:  1fr 1fr 1fr 1fr 1fr; grid-gap: 10px">
-                <div class="container" *ngFor="let img of imageUrl.slice(0, 10)">
+            <div style="display: grid; grid-template-columns:  1fr 1fr 1fr 1fr 1fr; grid-gap: 10px;">
+                <div class="container" *ngFor="let img of imageUrl.slice(0, 10); let i = index">
                     <img src="{{img.imganime}}" alt=""
-                        style="width: 180px; height: 280px; margin: 0 18px; border-radius: 20px; border: 5px solid blue;">
-                    <div class="circle">1</div>
+                        style="width: 180px; height: 280px; margin: 0 18px; border-radius: 20px; border: 4px solid rgb(255, 148, 184);">
+                    <div class="circle">{{ i + 1 }}</div>
                     <div class="score">score : {{img.score}}</div>
                 </div>
             </div>
         </div>
     </div>
+
 </div>

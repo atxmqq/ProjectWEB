@@ -145,8 +145,9 @@ export class VoteComponent implements OnInit {
               // สร้าง URL สำหรับอัปเดตคะแนนโดยใช้ PID (ไอดีของรูปภาพ)
               const updatescoreurl = 'http://localhost:3000/anidexvote/updatescore/' + winID; // หรือ loseID ตามที่ต้องการ
 
+
               // สร้างข้อมูลที่จะส่งไปยังเซิร์ฟเวอร์ (ในที่นี้คือคะแนนที่ต้องการอัปเดต)
-              const scoreData = { score: this.totalScore[winID] }; // หรือ loseScore ตามที่ต้องการ
+              const scoreData = { score: this.totalScore[winID], update_date: voteDate }; // หรือ loseScore ตามที่ต้องการ
 
               // ส่งคำขอ PUT โดยใช้ HttpClient
               this.http.put(updatescoreurl, scoreData).subscribe(
@@ -164,7 +165,7 @@ export class VoteComponent implements OnInit {
               const updatescoreurllose = 'http://localhost:3000/anidexvote/updatescore/' + loseID;
 
               // สร้างข้อมูลที่จะส่งไปยังเซิร์ฟเวอร์ (ในที่นี้คือคะแนนที่ต้องการอัปเดต)
-              const scoreDatalose = { score: this.totalScore[loseID] };
+              const scoreDatalose = { score: this.totalScore[loseID], update_date: voteDate };
 
               // ส่งคำขอ PUT โดยใช้ HttpClient
               this.http.put(updatescoreurllose, scoreDatalose).subscribe(
