@@ -4,4 +4,7 @@ export interface ImageGetRespon {
     imganime: string;
     score: number;
     uid: number;
+    total_score: number;
 }
+
+

@@ -62,7 +62,7 @@ export class Top10Component {
 
 
   getImageUrl() {
-    const url = 'https://backend-projectanidex.onrender.com/image';
+    const url = 'http://localhost:3000/image';
     this.http.get<ImageGetRespon[]>(url).subscribe((data: ImageGetRespon[]): void => {
       if (data && data.length > 0) {
         this.imageUrl = data;
@@ -76,20 +76,30 @@ export class Top10Component {
   }
 
   getImageUrlprevious() {
-    const url = 'http://localhost:3000/image/previous';
+    const url = 'http://localhost:3000/nowscore';
     this.http.get<ImageGetRespon[]>(url).subscribe((data: ImageGetRespon[]): void => {
       if (data && data.length > 0) {
         this.imageUrlprevious = data;
       } else {
         console.log('No image data found');
       }
-      // จัดเรียง imageUrl โดยให้คะแนนสูงสุดมาก่อน
-      this.imageUrlprevious.sort((a, b) => b.score - a.score);
+
+      this.imageUrlprevious.sort((a, b) => b.total_score - a.total_score);
 
     });
   }
-
+  
   toggleImages() {
     this.showPreviousImages = !this.showPreviousImages; // เปลี่ยนค่าเมื่อกดปุ่ม
+
+    if (this.showPreviousImages) {
+      // โหลดข้อมูลรูปภาพก่อนหน้าเมื่อปุ่มถูกกด
+      this.getImageUrlprevious();
+    } else {
+      // โหลดข้อมูลรูปภาพปัจจุบันเมื่อปุ่มถูกปล่อย
+      this.getImageUrl();
+    }
   }
+
+
 }
