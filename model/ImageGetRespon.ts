@@ -7,4 +7,9 @@ export interface ImageGetRespon {
     total_score: number;
 }
 
+export interface Sevendaybefore {
+    pid: number;
+    voting_day: Date;
+    total_score_last_7_days: number;
+}
 

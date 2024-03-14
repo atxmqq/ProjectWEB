@@ -6,16 +6,10 @@
         <div
             style="width: 35%; display: flex; align-items:center; justify-content: space-between; color: white;margin-right: 50px;">
             <button mat-button style="font-weight: bolder;font-size: 20px;color: rgb(255, 148, 184);"
-                [routerLink]="['/homepage']">HOME</button>
+                [routerLink]="['/']">HOME</button>
             <button mat-button style="font-weight: bolder;font-size: 20px;color: aliceblue;"
                 [routerLink]="['/vote']">VOTE</button>
-            <button mat-button style="font-weight: bolder;font-size: 20px;color: rgb(255, 148, 184);"
-                [routerLink]="['/top10']">Top 10</button>
-            <button mat-button style="font-weight: bolder;font-size: 20px;color: aliceblue;"
-                (click)="logOut()">Logout</button>
-            <img *ngFor="let user of userdata"
-                [src]="user.imguser ? user.imguser : 'https://cdn-icons-png.flaticon.com/512/3541/3541871.png'" alt=""
-                class="profileimg" [routerLink]="['/profile']">
+
         </div>
     </div>
 
@@ -29,7 +23,8 @@
             <div style="display: grid; grid-template-columns:  1fr 1fr 1fr 1fr 1fr; grid-gap: 10px;">
                 <div class="container" *ngFor="let img of imageUrl.slice(0, 10); let i = index">
                     <img src="{{img.imganime}}" alt=""
-                        style="width: 180px; height: 280px; margin: 0 18px; border-radius: 20px; border: 4px solid rgb(255, 148, 184);">
+                        style="width: 180px; height: 280px; margin: 0 18px; border-radius: 20px; border: 4px solid rgb(255, 148, 184);"
+                        [routerLink]="['/graph',img.pid]">
                     <div class="circle">{{ i + 1 }}</div>
                     <div class="score">score : {{img.score}}</div>
                 </div>
@@ -42,7 +37,8 @@
             <div style="display: grid; grid-template-columns:  1fr 1fr 1fr 1fr 1fr; grid-gap: 10px;">
                 <div class="container" *ngFor="let img of imageUrlprevious.slice(0, 10); let i = index">
                     <img src="{{img.imganime}}" alt=""
-                        style="width: 180px; height: 280px; margin: 0 18px; border-radius: 20px; border: 4px solid rgb(255, 148, 184);">
+                        style="width: 180px; height: 280px; margin: 0 18px; border-radius: 20px; border: 4px solid rgb(255, 148, 184);"
+                        [routerLink]="['/graph',img.pid]">
                     <div class="circle">{{ i + 1 }}</div>
                     <div class="score">score : {{img.total_score}}</div>
                 </div>

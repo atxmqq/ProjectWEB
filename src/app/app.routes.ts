@@ -5,6 +5,7 @@ import { HomepageComponent } from './components/homepage/homepage.component';
 import { VoteComponent } from './components/vote/vote.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { Top10Component } from './components/top10/top10.component';
+import { GraphComponent } from './components/graph/graph.component';
 
 export const routes: Routes = [
     {
@@ -24,6 +25,9 @@ export const routes: Routes = [
     },
     {
         path: 'top10', component: Top10Component
+    },
+    {
+        path: 'graph/:pid', component: GraphComponent
     }
 
 ];

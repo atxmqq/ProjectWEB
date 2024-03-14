@@ -26,37 +26,9 @@ export class Top10Component {
     this.getImageUrl();
     this.getImageUrlprevious();
 
-    const token = localStorage.getItem('token');
-    if (token) {
-      console.log('Token:', token);
-
-      try {
-        const url = `https://backend-projectanidex.onrender.com/user/${token}`;
-        this.http.get(url).subscribe((data: any) => {
-          if (data) {
-            this.userdata = [data];
-            console.log('User data:', this.userdata);
-          } else {
-            console.log('No User data found');
-          }
-          this.flag = true; // กำหนดค่า flag เป็น true เมื่อมี token
-        });
-      } catch (error) {
-        console.error('Error fetching user data:', error);
-      }
-    } else {
-      console.log('No token found in localStorage');
-      this.flag = true; // กำหนดค่า flag เป็น true เมื่อไม่มี token
-    }
   }
 
-  logOut() {
-    localStorage.removeItem('token');
-    this.userdata = [];
-    this.router.navigateByUrl('/login');
-  }
-
-
+  
   imageUrl: ImageGetRespon[] = [];
   imageUrlprevious: ImageGetRespon[] = [];
 
@@ -88,7 +60,7 @@ export class Top10Component {
 
     });
   }
-  
+
   toggleImages() {
     this.showPreviousImages = !this.showPreviousImages; // เปลี่ยนค่าเมื่อกดปุ่ม
 
