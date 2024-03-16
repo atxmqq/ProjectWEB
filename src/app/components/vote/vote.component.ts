@@ -117,80 +117,118 @@ export class VoteComponent implements OnInit {
   }
 
 
-  async vote(winID: any, loseID: any, winScore: number, loseScore: number) {
+  vote(winID: any, loseID: any, winScore: number, loseScore: number) {
     const urlvote = 'https://backend-projectanidex.onrender.com/anidexvote/score';
     const updatescoreurl = 'http://localhost:3000/anidexvote/updatescore';
 
-    try {
-      const voteDate = this.datePipe.transform(new Date(), 'yyyy-MM-dd HH:mm:ss');
+    const token = localStorage.getItem('token');
 
-      const Win = await this.http.post(urlvote, { uid_fk: null, pid_fk: winID, winlose: 1, score: winScore, vote_date: voteDate }).toPromise();
-      const Lose = await this.http.post(urlvote, { uid_fk: null, pid_fk: loseID, winlose: 0, score: loseScore, vote_date: voteDate }).toPromise();
+    if (token) {
+      try {
+        const url = `http://localhost:3000/user/${token}`;
+        this.http.get(url).subscribe(async (data: any) => {
+          if (data) {
+            const userID = data.uid;
+            console.log('UserID:', userID);
 
-      this.totalScore[winID] = (this.totalScore[winID] || 0) + winScore;
-      this.totalScore[loseID] = (this.totalScore[loseID] || 0) + loseScore;
+            try {
+              const voteDate = this.datePipe.transform(new Date(), 'yyyy-MM-dd HH:mm:ss');
 
-      // สร้าง URL สำหรับอัปเดตคะแนนโดยใช้ PID (ไอดีของรูปภาพ)
-      const updatescoreurl = 'http://localhost:3000/anidexvote/updatescore/' + winID; // หรือ loseID ตามที่ต้องการ
+              const Win = await this.http.post(urlvote, { uid_fk: userID, pid_fk: winID, winlose: 1, score: winScore, vote_date: voteDate }).toPromise();
+              const Lose = await this.http.post(urlvote, { uid_fk: userID, pid_fk: loseID, winlose: 0, score: loseScore, vote_date: voteDate }).toPromise();
 
-
-      // สร้างข้อมูลที่จะส่งไปยังเซิร์ฟเวอร์ (ในที่นี้คือคะแนนที่ต้องการอัปเดต)
-      const scoreData = { score: this.totalScore[winID] }; // หรือ loseScore ตามที่ต้องการ
-
-      // ส่งคำขอ PUT โดยใช้ HttpClient
-      this.http.put(updatescoreurl, scoreData).subscribe(
-        (response) => {
-          console.log('Score updated successfully:', response);
-          // ทำสิ่งที่คุณต้องการหลังจากอัปเดตคะแนนสำเร็จ
-        },
-        (error) => {
-          console.error('Error updating score:', error);
-          // จัดการข้อผิดพลาดที่เกิดขึ้นในการอัปเดตคะแนน
-        }
-      );
-
-      // สร้าง URL สำหรับอัปเดตคะแนนโดยใช้ PID (ไอดีของรูปภาพที่แพ้)
-      const updatescoreurllose = 'http://localhost:3000/anidexvote/updatescore/' + loseID;
-
-      // สร้างข้อมูลที่จะส่งไปยังเซิร์ฟเวอร์ (ในที่นี้คือคะแนนที่ต้องการอัปเดต)
-      const scoreDatalose = { score: this.totalScore[loseID] };
-
-      // ส่งคำขอ PUT โดยใช้ HttpClient
-      this.http.put(updatescoreurllose, scoreDatalose).subscribe(
-        (response) => {
-          console.log('Score updated successfully:', response);
-          // ทำสิ่งที่คุณต้องการหลังจากอัปเดตคะแนนสำเร็จ
-        },
-        (error) => {
-          console.error('Error updating score:', error);
-          // จัดการข้อผิดพลาดที่เกิดขึ้นในการอัปเดตคะแนน
-        }
-      );
+              this.totalScore[winID] = (this.totalScore[winID] || 0) + winScore;
+              this.totalScore[loseID] = (this.totalScore[loseID] || 0) + loseScore;
 
 
 
-      console.log(Win);
-      console.log(Lose);
+              // สร้าง URL สำหรับอัปเดตคะแนนโดยใช้ PID (ไอดีของรูปภาพ)
+              const updatescoreurl = 'http://localhost:3000/anidexvote/updatescore/' + winID; // หรือ loseID ตามที่ต้องการ
 
-      Swal.fire({
-        title: 'Vote Successful',
-        icon: 'success',
-        timer: 1000,
-        timerProgressBar: true,
-        backdrop: false,
-        didOpen: () => {
-          Swal.showLoading();
-        },
-        willClose: () => {
-          location.reload();
-        },
-      });
-    } catch (error) {
-      console.error('Error voting:', error);
+
+              // สร้างข้อมูลที่จะส่งไปยังเซิร์ฟเวอร์ (ในที่นี้คือคะแนนที่ต้องการอัปเดต)
+              const scoreData = { score: this.totalScore[winID]}; // หรือ loseScore ตามที่ต้องการ
+
+              // ส่งคำขอ PUT โดยใช้ HttpClient
+              this.http.put(updatescoreurl, scoreData).subscribe(
+                (response) => {
+                  console.log('Score updated successfully:', response);
+                  // ทำสิ่งที่คุณต้องการหลังจากอัปเดตคะแนนสำเร็จ
+                },
+                (error) => {
+                  console.error('Error updating score:', error);
+                  // จัดการข้อผิดพลาดที่เกิดขึ้นในการอัปเดตคะแนน
+                }
+              );
+
+              // สร้าง URL สำหรับอัปเดตคะแนนโดยใช้ PID (ไอดีของรูปภาพที่แพ้)
+              const updatescoreurllose = 'http://localhost:3000/anidexvote/updatescore/' + loseID;
+
+              // สร้างข้อมูลที่จะส่งไปยังเซิร์ฟเวอร์ (ในที่นี้คือคะแนนที่ต้องการอัปเดต)
+              const scoreDatalose = { score: this.totalScore[loseID]};
+
+              // ส่งคำขอ PUT โดยใช้ HttpClient
+              this.http.put(updatescoreurllose, scoreDatalose).subscribe(
+                (response) => {
+                  console.log('Score updated successfully:', response);
+                  // ทำสิ่งที่คุณต้องการหลังจากอัปเดตคะแนนสำเร็จ
+                },
+                (error) => {
+                  console.error('Error updating score:', error);
+                  // จัดการข้อผิดพลาดที่เกิดขึ้นในการอัปเดตคะแนน
+                }
+              );
+
+
+
+              console.log(Win);
+              console.log(Lose);
+
+              Swal.fire({
+                title: 'Vote Successful',
+                icon: 'success',
+                timer: 1000,
+                timerProgressBar: true,
+                backdrop: false,
+                didOpen: () => {
+                  Swal.showLoading();
+                },
+                willClose: () => {
+                  location.reload();
+                },
+              });
+            } catch (error) {
+              console.error('Error voting:', error);
+              Swal.fire({
+                icon: 'error',
+                title: 'Vote Failed',
+                text: 'An error occurred while voting',
+                backdrop: false,
+              });
+            }
+          } else {
+            Swal.fire({
+              icon: 'error',
+              title: 'Vote Failed',
+              text: 'No user data found',
+              backdrop: false,
+            });
+          }
+        });
+      } catch (error) {
+        console.error('Error fetching user data:', error);
+        Swal.fire({
+          icon: 'error',
+          title: 'Vote Failed',
+          text: 'An error occurred while fetching user data',
+          backdrop: false,
+        });
+      }
+    } else {
       Swal.fire({
         icon: 'error',
         title: 'Vote Failed',
-        text: 'An error occurred while voting',
+        text: 'No token found in localStorage',
         backdrop: false,
       });
     }
@@ -254,3 +292,5 @@ export class VoteComponent implements OnInit {
     console.log(this.totalScore);
   }
 }
+
+
