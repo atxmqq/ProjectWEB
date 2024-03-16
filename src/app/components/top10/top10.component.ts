@@ -72,6 +72,10 @@ export class Top10Component {
       this.getImageUrl();
     }
   }
+  
 
+  
+
+  
 
 }
