@@ -34,7 +34,7 @@ export class Top10Component {
 
 
   getImageUrl() {
-    const url = 'http://localhost:3000/image';
+    const url = 'https://backend-projectanidex.onrender.com/image';
     this.http.get<ImageGetRespon[]>(url).subscribe((data: ImageGetRespon[]): void => {
       if (data && data.length > 0) {
         this.imageUrl = data;
@@ -48,7 +48,7 @@ export class Top10Component {
   }
 
   getImageUrlprevious() {
-    const url = 'http://localhost:3000/nowscore';
+    const url = 'https://backend-projectanidex.onrender.com/nowscore';
     this.http.get<ImageGetRespon[]>(url).subscribe((data: ImageGetRespon[]): void => {
       if (data && data.length > 0) {
         this.imageUrlprevious = data;

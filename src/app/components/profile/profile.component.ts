@@ -78,7 +78,7 @@ export class ProfileComponent implements AfterViewInit {
 
   async upload() {
     if (this.files.length > 0) {
-      const url = 'http://localhost:3000/upload';
+      const url = 'https://backend-projectanidex.onrender.com/upload';
       const formData = new FormData();
       this.files.forEach((file) => {
         formData.append('files', file);

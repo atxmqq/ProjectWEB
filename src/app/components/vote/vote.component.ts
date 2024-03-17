@@ -119,13 +119,13 @@ export class VoteComponent implements OnInit {
 
   vote(winID: any, loseID: any, winScore: number, loseScore: number) {
     const urlvote = 'https://backend-projectanidex.onrender.com/anidexvote/score';
-    const updatescoreurl = 'http://localhost:3000/anidexvote/updatescore';
+    const updatescoreurl = 'https://backend-projectanidex.onrender.com/anidexvote/updatescore';
 
     const token = localStorage.getItem('token');
 
     if (token) {
       try {
-        const url = `http://localhost:3000/user/${token}`;
+        const url = `https://backend-projectanidex.onrender.com/user/${token}`;
         this.http.get(url).subscribe(async (data: any) => {
           if (data) {
             const userID = data.uid;
@@ -137,35 +137,27 @@ export class VoteComponent implements OnInit {
               const Win = await this.http.post(urlvote, { uid_fk: userID, pid_fk: winID, winlose: 1, score: winScore, vote_date: voteDate }).toPromise();
               const Lose = await this.http.post(urlvote, { uid_fk: userID, pid_fk: loseID, winlose: 0, score: loseScore, vote_date: voteDate }).toPromise();
 
-              this.totalScore[winID] = (this.totalScore[winID] || 0) + winScore;
+              this.totalScore[winID] = (this.totalScore[winID] || 0) + winScore; //รวมคะแนน 
               this.totalScore[loseID] = (this.totalScore[loseID] || 0) + loseScore;
 
 
 
-              // สร้าง URL สำหรับอัปเดตคะแนนโดยใช้ PID (ไอดีของรูปภาพ)
-              const updatescoreurl = 'http://localhost:3000/anidexvote/updatescore/' + winID; // หรือ loseID ตามที่ต้องการ
-
-
-              // สร้างข้อมูลที่จะส่งไปยังเซิร์ฟเวอร์ (ในที่นี้คือคะแนนที่ต้องการอัปเดต)
-              const scoreData = { score: this.totalScore[winID]}; // หรือ loseScore ตามที่ต้องการ
-
-              // ส่งคำขอ PUT โดยใช้ HttpClient
+              const updatescoreurl = 'https://backend-projectanidex.onrender.com/anidexvote/updatescore/' + winID;
+              const scoreData = { score: this.totalScore[winID] }; 
               this.http.put(updatescoreurl, scoreData).subscribe(
                 (response) => {
                   console.log('Score updated successfully:', response);
-                  // ทำสิ่งที่คุณต้องการหลังจากอัปเดตคะแนนสำเร็จ
                 },
                 (error) => {
                   console.error('Error updating score:', error);
-                  // จัดการข้อผิดพลาดที่เกิดขึ้นในการอัปเดตคะแนน
                 }
               );
 
               // สร้าง URL สำหรับอัปเดตคะแนนโดยใช้ PID (ไอดีของรูปภาพที่แพ้)
-              const updatescoreurllose = 'http://localhost:3000/anidexvote/updatescore/' + loseID;
+              const updatescoreurllose = 'https://backend-projectanidex.onrender.com/anidexvote/updatescore/' + loseID;
 
               // สร้างข้อมูลที่จะส่งไปยังเซิร์ฟเวอร์ (ในที่นี้คือคะแนนที่ต้องการอัปเดต)
-              const scoreDatalose = { score: this.totalScore[loseID]};
+              const scoreDatalose = { score: this.totalScore[loseID] };
 
               // ส่งคำขอ PUT โดยใช้ HttpClient
               this.http.put(updatescoreurllose, scoreDatalose).subscribe(

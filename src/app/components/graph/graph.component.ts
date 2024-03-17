@@ -35,7 +35,7 @@ export class GraphComponent implements OnInit {
 
 
   imagePidData(pid: number): void {
-    const url = `http://localhost:3000/image/${pid}`;
+    const url = `https://backend-projectanidex.onrender.com/image/${pid}`;
     this.http.get<ImageGetRespon[]>(url).subscribe((data: ImageGetRespon[]): void => {
       if (data && data.length > 0) {
         this.imageData = data;
@@ -47,7 +47,7 @@ export class GraphComponent implements OnInit {
 
 
   sevendayforgraph(pid: number): void {
-    const sevendayurl = `http://localhost:3000/nowscore/sevenday_before/${pid}`;
+    const sevendayurl = `https://backend-projectanidex.onrender.com/nowscore/sevenday_before/${pid}`;
     this.http.get(sevendayurl).subscribe(
       (data: any) => {
         this.sevendayData = data;
