@@ -27,12 +27,13 @@
                         <div style="display: flex;flex-direction: column;align-items: center;">
                             <img src="{{img.imganime}}"
                                 style="width: 280px; height: 380px; margin: 0 18px; border-radius: 20px; border: 5px solid red;"
-                                (click)="clickImages('red', img.pid, img.score, shuffledImages[i+1].pid, shuffledImages[i+1].score)"
+                                (click)="clickImages('red', img.pid, img.total_score, shuffledImages[i+1].pid, shuffledImages[i+1].total_score)"
                                 *ngIf="redImageVisible">
                             <!-- ส่ง pid, score ชนะ และ แพ้ไป  -->
                             <div *ngIf="redImageVisible">
                                 <p style="color: white;">Total Score: {{totalScore[img.pid]}}</p>
                             </div>
+
                         </div>
 
                         <div style="display: flex; margin-left: 100px;margin-right: 100px;font-size: 20px; align-items: center;"
@@ -44,10 +45,9 @@
                             <img *ngIf="shuffledImages[i+1]?.imganime && blueImageVisible"
                                 src="{{shuffledImages[i+1].imganime}}"
                                 style="width: 280px; height: 380px; margin: 0 18px; border-radius: 20px;border: 5px solid blue;"
-                                (click)="clickImages('blue', shuffledImages[i+1].pid, shuffledImages[i+1].score, img.pid, img.score)">
+                                (click)="clickImages('blue', shuffledImages[i+1].pid, shuffledImages[i+1].total_score, img.pid, img.total_score)">
                             <div *ngIf="blueImageVisible">
                                 <p style="color: white;">Total Score: {{totalScore[shuffledImages[i+1].pid]}}</p>
-
                             </div>
                         </div>
                     </div>

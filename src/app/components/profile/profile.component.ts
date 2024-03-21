@@ -19,6 +19,8 @@ import { ImageGetRespon } from '../../../../model/ImageGetRespon';
 export class ProfileComponent implements AfterViewInit {
   userdata: UserGetRespon[] = [];
   flag: boolean = false; // เพิ่มตัวแปร flag เพื่อตรวจสอบการมี token
+  uid: any;
+  fileUrl: any;
 
   constructor(private http: HttpClient, private router: Router) { }
 
@@ -35,6 +37,7 @@ export class ProfileComponent implements AfterViewInit {
         this.http.get(url).subscribe((data: any) => {
           if (data) {
             this.userdata = [data];
+            this.uid = data.uid;
             console.log('User data:', this.userdata);
           } else {
             console.log('No User data found');
@@ -51,8 +54,6 @@ export class ProfileComponent implements AfterViewInit {
   }
 
 
-  fileUrl: string | undefined;
-  files: File[] = [];
 
   ngAfterViewInit(): void {
     // เรียกใช้งานฟังก์ชัน openPopup() และ closePopup()
@@ -73,34 +74,29 @@ export class ProfileComponent implements AfterViewInit {
       popup.classList.remove("open-popup");
     }
   }
+
   file?: File;
-
-
-  async upload() {
-    if (this.files.length > 0) {
-      const url = 'https://backend-projectanidex.onrender.com/upload';
-      const formData = new FormData();
-      this.files.forEach((file) => {
-        formData.append('files', file);
-      });
-      const response: any = await lastValueFrom(this.http.post(url, formData));
-      console.log('Uploaded files:', response);
-    }
-  }
 
   onFileSelected(event: Event) {
     if ((event.target as HTMLInputElement).files) {
-      const selectedFiles = (event.target as HTMLInputElement).files!;
-      this.files.push(...Array.from(selectedFiles));
+      this.file = (event.target as HTMLInputElement).files![0];
 
-      // แสดงรูปที่เลือก
-      const reader = new FileReader();
-      reader.onload = (e: any) => {
-        this.fileUrl = e.target.result;
-      };
-      reader.readAsDataURL(selectedFiles[0]);
+      // ตรวจสอบว่า this.file ไม่เป็น null หรือ undefined ก่อนที่จะใช้งาน FileReader
+      if (this.file) {
+        const reader = new FileReader();
+        reader.onload = (e: any) => {
+          this.fileUrl = e.target.result;
+        };
+        reader.readAsDataURL(this.file);
+      }
     }
   }
+
+
+
+
+
+
 
   imageUrl: ImageGetRespon[] = [];
 
@@ -121,6 +117,55 @@ export class ProfileComponent implements AfterViewInit {
     this.router.navigateByUrl('/login');
   }
 
+
+
+  uploadImageAnime() {
+    // ตรวจสอบจำนวนรูปภาพที่มีในฐานข้อมูลสำหรับผู้ใช้นี้
+    this.http.get<any>(`https://backend-projectanidex.onrender.com/upload/image_count/${this.uid}`)
+      .toPromise()
+      .then((countResponse) => {
+        const imageCount = countResponse.image_count;
+        if (imageCount >= 5) {
+          console.log('Maximum image count reached for this user');
+          alert('ไม่สามารถอัพโหลดได้');
+        } else {
+          // ดำเนินการอัพโหลดรูปภาพ
+          if (!this.file) {
+            console.log('No file selected.');
+            return;
+          }
+
+          const formData = new FormData();
+          formData.append('file', this.file);
+
+
+          this.http.post<any>('https://backend-projectanidex.onrender.com/upload', formData)
+            .toPromise()
+            .then((response) => {
+              console.log('Image uploaded. Firebase URL:', response.file);
+
+              // ส่งข้อมูลไปยัง Express Route เพื่อเพิ่มข้อมูลลงใน MySQL
+              const uploadData = {
+                imganime: response.file,
+                uid: this.uid
+              };
+
+              return this.http.post<any>('https://backend-projectanidex.onrender.com/upload/insertPictureAnime', uploadData)
+                .toPromise();
+            })
+            .then(() => {
+              console.log('Data added to MySQL successfully.');
+
+              // หากอัพโหลดสำเร็จ ให้ปิด popup
+              this.closePopup();
+            })
+            .catch((error) => {
+              console.error('Error uploading image:', error);
+            });
+        }
+      })
+      .catch((error) => { });
+  }
 
 }
 
