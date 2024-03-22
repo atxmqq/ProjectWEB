@@ -95,7 +95,7 @@ export class VoteComponent implements OnInit {
     return images;
   }
 
-  clickImages(color: string, winID: any, winScore: number, loseID: any, loseScore: number) {
+  async clickImages(color: string, winID: any, winScore: number, loseID: any, loseScore: number) {
     if (color === 'red') {
       this.redImageVisible = true;
       this.blueImageVisible = false;
@@ -110,6 +110,15 @@ export class VoteComponent implements OnInit {
     if (typeof loseScore === 'undefined') {
       loseScore = 0;
     }
+
+
+    // if (winScore === 100 || loseScore === 100) {
+    //   this.calvote(winID, loseID, winScore, loseScore)
+    // } else {
+    //   this.calvote(winID, loseID, winScore, loseScore);
+    // }
+
+
 
     this.calvote(winID, loseID, winScore, loseScore); //เรียกใช้ calvote ส่ง winID, loseID, winScore, loseScore  ที่รับมาไปคำนวณ
 

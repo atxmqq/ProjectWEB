@@ -74,6 +74,46 @@
                         <div style="display:flex; flex-direction: column;">
                             <img *ngIf="user.uid === img.uid" src="{{img.imganime}}" alt=""
                                 style="width: 180px; height: 280px; margin: 0 18px; border-radius: 20px; border: 4px solid rgb(255, 148, 184);">
+
+                            <div *ngIf="user.uid === img.uid"
+                                style="display:flex; flex-direction: column; position: absolute; margin-top: 220px; margin-left: 170px;">
+                                <mat-icon aria-hidden="false" aria-label="Change picture icon" fontIcon="change_circle"
+                                    style="color: white; font-size: 26.7px; margin-bottom: 5px;"
+                                    (click)="openPopupChange(img.pid)"></mat-icon>
+
+                                <mat-icon aria-hidden="false" aria-label="Delete picture icon" fontIcon="delete"
+                                    style="color: white; font-size: 26.7px;"></mat-icon>
+                                <div class="popupchange" id="popupchange">
+                                    <h2>Change Picture</h2>
+                                    <p>Choose Files to Change</p>
+                                    <ng-container *ngFor="let imgpid of imageDatabyPID">
+                                        <img *ngIf="!fileUrl" src="{{imgpid.imganime}}" alt=""
+                                            style="max-width: 100%; max-height: 200px;">
+
+                                        <img *ngIf="fileUrl" [src]="fileUrl" alt="Uploaded Image"
+                                            style="max-width: 100%; max-height: 200px;">
+
+                                        <div style="margin-top: 10px;">
+                                            <input type="file" #fileUpload (change)="onFileSelectedChange($event)" />
+                                        </div>
+
+                                        <button
+                                            style="padding: 10px 20px;background-color: rgb(255, 148, 184);color: white;border: none;border-radius: 5px;cursor: pointer;width: 150px;font-weight: bolder;margin-top: 10px;margin-left: 10px;"
+                                            class="button" type="button"
+                                            (click)="uploadImageAnimeForChange(imgpid.pid)">Change</button>
+
+                                        <button
+                                            style="padding: 10px 20px;background-color: rgb(255, 148, 184);color: white;border: none;border-radius: 5px;cursor: pointer;width: 150px;font-weight: bolder;margin-top: 10px;margin-left: 10px;"
+                                            class="button" type="button" (click)="closePopupChange()">Close</button>
+                                    </ng-container>
+
+
+                                </div>
+                            </div>
+
+
+
+
                             <p *ngIf="user.uid === img.uid" style="color: #fff;margin-left: 70px;">score:{{img.score}}
                             </p>
                         </div>

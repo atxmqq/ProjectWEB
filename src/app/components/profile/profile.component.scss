@@ -35,6 +35,24 @@
      /* ให้ป้อปอัพอยู่ด้านหน้า */
  }
 
+ .popupchange {
+     width: 400px;
+     background-color: aliceblue;
+     border-radius: 6px;
+     position: fixed;
+     top: 50%;
+     left: 50%;
+     transform: translate(-50%, -50%);
+     text-align: center;
+     padding: 0 30px 30px;
+     color: #333;
+     visibility: hidden;
+     transition: transform 0.4s, top 0.4s;
+     z-index: 9999;
+     /* ให้ป้อปอัพอยู่ด้านหน้า */
+ }
+
+
  .open-popup {
      visibility: visible;
      top: 50%;
@@ -56,17 +74,23 @@
      width: 13%;
      border-radius: 50%;
  }
-//  .score {
-//     position: absolute;
-//     bottom: 0;
-//     /* ตั้งค่าให้อยู่ด้านล่างของภาพ */
-//     // left: 50%;
-//     /* ตั้งค่าให้อยู่ตรงกลาง */
-//     // transform: translateX(-50%);
-//     /* ปรับตำแหน่งตามแกน X เพื่อให้อยู่ตรงกลาง */
-//     color: white;
-//     font-weight: bold;
-//     z-index: 1;
-//     background-color: rgb(255, 148, 184);
-//     border-radius: 5px;
-// }
+
+ //  .score {
+ //     position: absolute;
+ //     bottom: 0;
+ //     /* ตั้งค่าให้อยู่ด้านล่างของภาพ */
+ //     // left: 50%;
+ //     /* ตั้งค่าให้อยู่ตรงกลาง */
+ //     // transform: translateX(-50%);
+ //     /* ปรับตำแหน่งตามแกน X เพื่อให้อยู่ตรงกลาง */
+ //     color: white;
+ //     font-weight: bold;
+ //     z-index: 1;
+ //     background-color: rgb(255, 148, 184);
+ //     border-radius: 5px;
+ // }
+
+ .iconchange {
+     background-color: #787878;
+     border-radius: 5px;
+ }

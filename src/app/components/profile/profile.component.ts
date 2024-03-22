@@ -7,12 +7,14 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { UserGetRespon } from '../../../../model/UserGetRespon';
 import { ImageGetRespon } from '../../../../model/ImageGetRespon';
+import { MatIconModule } from '@angular/material/icon';
+
 
 
 @Component({
   selector: 'app-profile',
   standalone: true,
-  imports: [RouterLink, MatButtonModule, MatDividerModule, HttpClientModule, CommonModule],
+  imports: [RouterLink, MatButtonModule, MatDividerModule, HttpClientModule, CommonModule, MatIconModule],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.scss',
 })
@@ -21,6 +23,9 @@ export class ProfileComponent implements AfterViewInit {
   flag: boolean = false; // เพิ่มตัวแปร flag เพื่อตรวจสอบการมี token
   uid: any;
   fileUrl: any;
+
+  imageDatabyPID: ImageGetRespon[] = [];
+  pid: any;
 
   constructor(private http: HttpClient, private router: Router) { }
 
@@ -59,6 +64,7 @@ export class ProfileComponent implements AfterViewInit {
     // เรียกใช้งานฟังก์ชัน openPopup() และ closePopup()
     this.openPopup();
     this.closePopup();
+
   }
 
   openPopup() {
@@ -74,6 +80,34 @@ export class ProfileComponent implements AfterViewInit {
       popup.classList.remove("open-popup");
     }
   }
+
+  openPopupChange(pid: any): void {
+    let popupchange = document.getElementById("popupchange");
+    if (popupchange) {
+      popupchange.classList.add("open-popup");
+    }
+
+    // ดึงข้อมูลรูปภาพตาม pid จากเซิร์ฟเวอร์
+    const url = `https://backend-projectanidex.onrender.com/image/${pid}`;
+    this.http.get<ImageGetRespon[]>(url).subscribe((data: ImageGetRespon[]): void => {
+      if (data && data.length > 0) {
+        this.imageDatabyPID = data;
+      } else {
+        console.log('No image data found');
+      }
+    });
+  }
+
+
+
+  closePopupChange() {
+    let popupchange = document.getElementById("popupchange");
+    if (popupchange) {
+      popupchange.classList.remove("open-popup");
+    }
+  }
+
+
 
   file?: File;
 
@@ -92,10 +126,20 @@ export class ProfileComponent implements AfterViewInit {
     }
   }
 
+  onFileSelectedChange(event: Event) {
+    if ((event.target as HTMLInputElement).files) {
+      this.file = (event.target as HTMLInputElement).files![0];
 
-
-
-
+      // ตรวจสอบว่า this.file ไม่เป็น null หรือ undefined ก่อนที่จะใช้งาน FileReader
+      if (this.file) {
+        const reader = new FileReader();
+        reader.onload = (e: any) => {
+          this.fileUrl = e.target.result;
+        };
+        reader.readAsDataURL(this.file);
+      }
+    }
+  }
 
 
   imageUrl: ImageGetRespon[] = [];
@@ -156,8 +200,8 @@ export class ProfileComponent implements AfterViewInit {
             .then(() => {
               console.log('Data added to MySQL successfully.');
 
-              // หากอัพโหลดสำเร็จ ให้ปิด popup
-              this.closePopup();
+              location.reload();
+
             })
             .catch((error) => {
               console.error('Error uploading image:', error);
@@ -167,5 +211,51 @@ export class ProfileComponent implements AfterViewInit {
       .catch((error) => { });
   }
 
-}
 
+
+
+  uploadImageAnimeForChange(pid: any): void {
+    // ตรวจสอบจำนวนรูปภาพที่มีในฐานข้อมูลสำหรับผู้ใช้นี้
+    this.http.delete<any>(`https://backend-projectanidex.onrender.com/upload/deleteimg/${pid}`)
+      .toPromise()
+      .then((response) => {
+        console.log('Delete successfully');
+      })
+      .catch((error) => {
+        console.log('Delete ERRORR!!!!');
+      });
+
+    // ดำเนินการอัพโหลดรูปภาพ
+    if (!this.file) {
+      console.log('No file selected.');
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append('file', this.file);
+
+
+    this.http.post<any>('https://backend-projectanidex.onrender.com/upload', formData)
+      .toPromise()
+      .then((response) => {
+        console.log('Image uploaded. Firebase URL:', response.file);
+
+        // ส่งข้อมูลไปยัง Express Route เพื่อเพิ่มข้อมูลลงใน MySQL
+        const uploadData = {
+          imganime: response.file,
+          uid: this.uid
+        };
+
+        return this.http.post<any>('https://backend-projectanidex.onrender.com/upload/insertPictureAnime', uploadData)
+          .toPromise();
+      })
+      .then(() => {
+        console.log('Data added to MySQL successfully.');
+
+        location.reload();
+      })
+      .catch((error) => {
+        console.error('Error uploading image:', error);
+      });
+  }
+}
