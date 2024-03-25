@@ -345,7 +345,7 @@ export class ProfileComponent implements AfterViewInit {
       password: this.passwordedit
     };
 
-    this.http.put<any>(`http://localhost:3000/user/editProfile/${uid}`, updatedUserData)
+    this.http.put<any>(`https://backend-projectanidex.onrender.com/user/editProfile/${uid}`, updatedUserData)
       .toPromise()
       .then((response) => {
         console.log('Update successful');
@@ -372,7 +372,7 @@ export class ProfileComponent implements AfterViewInit {
               imguser: response.file,
             };
 
-            return this.http.put<any>(`http://localhost:3000/upload/uploadUserProfile/${uid}`, uploadData)
+            return this.http.put<any>(`https://backend-projectanidex.onrender.com/upload/uploadUserProfile/${uid}`, uploadData)
               .toPromise();
           })
           .then(() => {
