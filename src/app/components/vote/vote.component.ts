@@ -8,12 +8,12 @@ import Swal from 'sweetalert2';
 import { ScoreTotal, UserGetRespon } from '../../../../model/UserGetRespon';
 import { MatButtonModule } from '@angular/material/button';
 import { DatePipe } from '@angular/common';
-
+import { NgxSpinnerModule ,NgxSpinnerService} from "ngx-spinner";
 
 @Component({
   selector: 'app-vote',
   standalone: true,
-  imports: [RouterLink, CommonModule, HttpClientModule, FormsModule, MatButtonModule],
+  imports: [RouterLink, CommonModule, HttpClientModule, FormsModule, MatButtonModule,NgxSpinnerModule],
   templateUrl: './vote.component.html',
   styleUrls: ['./vote.component.scss'],
   providers: [DatePipe]
@@ -40,9 +40,15 @@ export class VoteComponent implements OnInit {
   selectedImages: ImageGetRespon[] = [];
   uid: any
 
-  constructor(private http: HttpClient, private datePipe: DatePipe) { }
+  constructor(private http: HttpClient, private datePipe: DatePipe,private spinner: NgxSpinnerService) { }
 
   ngOnInit() {
+    this.spinner.show();
+
+    setTimeout(() => {
+      this.spinner.hide();
+    }, 1000);
+
     this.getImageUrl();
 
     const token = localStorage.getItem('token');
@@ -103,20 +109,6 @@ export class VoteComponent implements OnInit {
       this.redImageVisible = false;
       this.blueImageVisible = true;
     }
-
-    if (typeof winScore === 'undefined') {
-      winScore = 0;
-    }
-    if (typeof loseScore === 'undefined') {
-      loseScore = 0;
-    }
-
-
-    // if (winScore === 100 || loseScore === 100) {
-    //   this.calvote(winID, loseID, winScore, loseScore)
-    // } else {
-    //   this.calvote(winID, loseID, winScore, loseScore);
-    // }
 
 
 
@@ -231,7 +223,7 @@ export class VoteComponent implements OnInit {
     const loserExpectedScore = 1 / (1 + Math.pow(10, (winScore - loseScore) / 400)); //หาค่าความคาดหวัง lose
 
     let winNewscore = winScore + k_FACTOR * (1 - winerExpectedScore); //คะแนน win ใหม่
-    let loseNewscore = loseScore + k_FACTOR * (0 - loserExpectedScore); //คะแนน lose ใหม่
+    let loseNewscore = loseScore - k_FACTOR * (0 - loserExpectedScore);
 
 
     if (winNewscore < 0) {

@@ -7,12 +7,18 @@
         <div
             style="width: 35%; display: flex; align-items:center; justify-content: space-between; color: white;margin-right: 50px;">
             <button mat-button style="font-weight: bolder;font-size: 20px;color: rgb(255, 148, 184);"
-                [routerLink]="['/homepage']">HOME</button>
+                [routerLink]="['/']">HOME</button>
             <button mat-button style="font-weight: bolder;font-size: 20px;color: aliceblue;"
                 [routerLink]="['/vote']">VOTE</button>
             <button mat-button style="font-weight: bolder;font-size: 20px;color: rgb(255, 148, 184);"
                 [routerLink]="['/top10']">Top 10</button>
-            <button mat-button style="font-weight: bolder;font-size: 20px;color: aliceblue;"
+            <ng-container *ngFor="let user of userdata">
+                <ng-container *ngIf="user.type == 'admin'">
+                    <button mat-button style="font-weight: bolder;font-size: 20px;color: rgb(0, 162, 255);text-shadow: 0 0px 20px rgb(255, 255, 255);"
+                        [routerLink]="['/userlist']">User List</button>
+                </ng-container>
+            </ng-container>
+            <button mat-button style="font-weight: bolder;font-size: 20px;color: rgb(255, 255, 255);"
                 (click)="logOut()">Logout</button>
 
         </div>
@@ -35,37 +41,37 @@
                     <div class="popupProfileEdit" id="popupProfileEdit">
                         <h2>แก้ไขโปรไฟล์</h2>
                         <ng-container *ngFor="let userUID of userdata">
-                            <p>Chose Files to Change</p>
-                            <img class="circle-img" *ngIf="!fileUrl" src="{{userUID.imguser}}" alt=""
-                                style="max-width: 100%; max-height: 200px;">
-
-                            <img class="circle-img" *ngIf="fileUrl" [src]="fileUrl" alt="Uploaded Image"
-                                style="max-width: 100%; max-height: 200px;">
-
-                            <div style="margin-top: 10px;">
+                            <p>Choose Files to Change</p>
+                            <div class="circle-img-container">
+                                <img class="circle-img-popup" *ngIf="!fileUrl" src="{{userUID.imguser}}" alt="">
+                                <img class="circle-img-popup" *ngIf="fileUrl" [src]="fileUrl" alt="Uploaded Image">
+                            </div>
+                            <div class="file-input-container">
                                 <input type="file" #fileUpload (change)="onFileSelectedChangeProfile($event)" />
                             </div>
-
-                            <label for="username">Username:</label>
-                            <input type="text" id="username" name="username" required [(ngModel)]="usernameedit">
-                            <label for="password">password:</label>
-                            <input type="password" id="password" name="password" required [(ngModel)]="passwordedit">
-                            <label for="password">Confirm Password:</label>
-                            <input type="password" id="Confirm_password" name="Confirm_password" required
-                                [(ngModel)]="confirmpasswordedit">
+                            <div class="input-fields-container">
+                                <div class="input-field">
+                                    <label for="username">Username:</label>
+                                    <input type="text" id="username" name="username" required
+                                        [(ngModel)]="usernameedit">
+                                </div>
+                                <div class="input-field">
+                                    <label for="password">Password:</label>
+                                    <input type="password" id="password" name="password" required
+                                        [(ngModel)]="passwordedit">
+                                </div>
+                                <div class="input-field">
+                                    <label for="confirmPassword">Confirm Password:</label>
+                                    <input type="password" id="confirmPassword" name="confirmPassword" required
+                                        [(ngModel)]="confirmpasswordedit">
+                                </div>
+                            </div>
                         </ng-container>
                         <ng-container *ngFor="let userUID of userdata">
-                            <button
-                                style="padding: 10px 20px;background-color: rgb(255, 148, 184);color: white;border: none;border-radius: 5px;cursor: pointer;width: 150px;font-weight: bolder;margin-top: 10px;margin-left: 10px;"
-                                class="button" type="button" (click)="editprofile(userUID.uid)">Change</button>
-                            <button
-                                style="padding: 10px 20px;background-color: rgb(255, 148, 184);color: white;border: none;border-radius: 5px;cursor: pointer;width: 150px;font-weight: bolder;margin-top: 10px;margin-left: 10px;"
-                                class="button" type="button" (click)="closePopupProfileEdit()">Close</button>
+                            <button class="button" type="button" (click)="editprofile(userUID.uid)">Change</button>
+                            <button class="button" type="button" (click)="closePopupProfileEdit()">Close</button>
                         </ng-container>
                     </div>
-                    <button
-                        style="padding: 10px 20px;background-color: white;color: rgb(255, 148, 184);border: none;border-radius: 5px;cursor: pointer;width: 150px;font-weight: bolder;margin-top: 10px;"
-                        [routerLink]="['/']">เปลี่ยนรหัสผ่าน</button>
 
                 </div>
             </div>
@@ -158,3 +164,6 @@
     </div>
 
 </div>
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="rgba(255, 148, 184)" type="ball-clip-rotate-multiple">
+    <p style="font-size: 20px; color: rgb(255, 148, 184)">Loading...</p>
+</ngx-spinner>

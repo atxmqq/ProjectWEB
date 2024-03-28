@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { RouterLink, Router, ActivatedRoute } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
-import { UserGetRespon } from '../../../../model/UserGetRespon';
+import { Getuserjoinimg, UserGetRespon } from '../../../../model/UserGetRespon';
 import { Chart } from 'chart.js/auto';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { ImageGetRespon, Sevendaybefore } from '../../../../model/ImageGetRespon';
@@ -16,10 +16,14 @@ import { ImageGetRespon, Sevendaybefore } from '../../../../model/ImageGetRespon
   styleUrl: './graph.component.scss'
 })
 export class GraphComponent implements OnInit {
+  userdata: UserGetRespon[] = [];
+  user: UserGetRespon | undefined;
+  flag: boolean = false;
 
   pid: any;
   imageData: ImageGetRespon[] = [];
   sevendayData: Sevendaybefore[] = []
+  userdatapid: Getuserjoinimg[] = [];
 
 
   constructor(private route: ActivatedRoute, private http: HttpClient) { }
@@ -30,6 +34,31 @@ export class GraphComponent implements OnInit {
 
       this.imagePidData(this.pid);
       this.sevendayforgraph(this.pid);
+      this.getuserbyPid(this.pid);
+
+
+
+      const token = localStorage.getItem('token');
+      if (token) {
+        console.log('Token:', token);
+        try {
+          const url = `https://backend-projectanidex.onrender.com/user/${token}`;
+          this.http.get(url).subscribe((data: any) => {
+            if (data) {
+              this.userdata = [data];
+              console.log('User data:', this.userdata);
+            } else {
+              console.log('No User data found');
+            }
+            this.flag = true;
+          });
+        } catch (error) {
+          console.error('Error fetching user data:', error);
+        }
+      } else {
+        console.log('No token found in localStorage');
+        this.flag = false;
+      }
     });
   }
 
@@ -84,5 +113,19 @@ export class GraphComponent implements OnInit {
         }
       }
     });
+  }
+
+
+  getuserbyPid(pid: number): void {
+    const getuserbyUid = `https://backend-projectanidex.onrender.com/user/watchprofilepid/${pid}`;
+    this.http.get(getuserbyUid).subscribe(
+      (data: any) => {
+        this.userdatapid = data;
+        console.log(this.userdatapid);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   }
 }

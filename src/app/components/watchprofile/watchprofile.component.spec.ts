@@ -1,19 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { Top10Component } from './top10.component';
+import { WatchprofileComponent } from './watchprofile.component';
 
-
-describe('Top10Component', () => {
-  let component: Top10Component;
-  let fixture: ComponentFixture<Top10Component>;
+describe('WatchprofileComponent', () => {
+  let component: WatchprofileComponent;
+  let fixture: ComponentFixture<WatchprofileComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [Top10Component]
+      imports: [WatchprofileComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(Top10Component);
+    fixture = TestBed.createComponent(WatchprofileComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

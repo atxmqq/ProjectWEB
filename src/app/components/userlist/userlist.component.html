@@ -1,0 +1,55 @@
+<div class="body">
+    <!-- <div class="loader_bg">
+        <div class="loader"></div>
+    </div> -->
+
+    <!-- <div class="loader">Loading...</div> -->
+
+    <!-- <div class="loader"></div> -->
+    <div style="display: flex;flex-direction: row;justify-content: space-between;">
+        <div style="width: 20%; display: flex; align-items: center; margin-left: 30px;flex-direction: column;">
+            <img src="/assets/img/icon/LogoAnidex.png" alt="" style="width: 50%;">
+        </div>
+        <div
+            style="width: 35%; display: flex; align-items:center; justify-content: space-between; color: white;margin-right: 50px;">
+            <button mat-button style="font-weight: bolder;font-size: 20px;color: rgb(255, 148, 184);"
+                [routerLink]="['/homepage']">HOME</button>
+            <button mat-button style="font-weight: bolder;font-size: 20px;color: aliceblue;"
+                [routerLink]="['/vote']">VOTE</button>
+            <button mat-button style="font-weight: bolder;font-size: 20px;color: rgb(255, 148, 184);"
+                [routerLink]="['/top10']">Top 10</button>
+            <button mat-button style="font-weight: bolder;font-size: 20px;color: rgb(0, 162, 255);text-shadow: 0 0px 20px rgb(255, 255, 255);"
+                [routerLink]="['/userlist']">User List</button>
+            <button mat-button style="font-weight: bolder;font-size: 20px;color: rgb(255, 148, 184);"
+                (click)="logOut()">Logout</button>
+
+        </div>
+    </div>
+    <div style="display: flex;justify-content: center;height: 80%;">
+        <div style="display: flex;flex-direction: column;">
+            <h1 style="color: aliceblue;margin-left: 40px;">User List :</h1>
+            <div
+                style="display: flex;background-color: rgba(51, 51, 51, 0.9);width: 1200px;height: 550px; border-radius: 15px; flex-direction: column;margin-top: -10px;">
+                <div style="display: flex;justify-content: center;margin-top: 20px;">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr 1fr; grid-gap: 16px;">
+                        <ng-container *ngFor="let userAll of Alluserdata">
+                            <div class="user-card" [routerLink]="['/watchprofile',userAll.uid]">
+                                <div class="circle-img">
+                                    <img src="{{userAll.imguser}}" alt="">
+                                </div>
+                                <p style="margin-left: 10px;">{{userAll.username}}</p>
+                            </div>
+                        </ng-container>
+
+
+
+                    </div>
+
+
+
+                </div>
+            </div>
+
+        </div>
+
+        <ngx-spinner bdColor = "rgba(0, 0, 0, 0.8 )" size = "medium" color = "rgb(255, 148, 184)" type = "ball-clip-rotate-multiple" [fullScreen] = "true"><p style="color: rgb(255, 148, 184)" > Loading... </p></ngx-spinner>

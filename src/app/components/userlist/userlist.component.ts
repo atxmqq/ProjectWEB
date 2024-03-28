@@ -1,23 +1,27 @@
-import { Component } from '@angular/core';
+import { Component, AfterViewInit } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
-import { Router, RouterLink } from '@angular/router';
-import { UserGetRespon } from '../../../../model/UserGetRespon';
+import { RouterLink, Router } from '@angular/router';
+import { MatDividerModule } from '@angular/material/divider';
+import { lastValueFrom } from 'rxjs';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { UserGetRespon } from '../../../../model/UserGetRespon';
+import { ImageGetRespon } from '../../../../model/ImageGetRespon';
 
 import { NgxSpinnerModule ,NgxSpinnerService} from "ngx-spinner";
 
 @Component({
-  selector: 'app-homepage',
+  selector: 'app-userlist',
   standalone: true,
-  imports: [RouterLink, MatButtonModule, HttpClientModule, FormsModule, CommonModule,NgxSpinnerModule],
-  templateUrl: './homepage.component.html',
-  styleUrl: './homepage.component.scss'
+  imports: [RouterLink, MatButtonModule, MatDividerModule, HttpClientModule, CommonModule,NgxSpinnerModule],
+  templateUrl: './userlist.component.html',
+  styleUrl: './userlist.component.scss'
 })
-export class HomepageComponent {
+export class UserlistComponent {
+
   userdata: UserGetRespon[] = [];
   flag: boolean = false; // เพิ่มตัวแปร flag เพื่อตรวจสอบการมี token
+  Alluserdata: UserGetRespon[] = [];
 
   constructor(private http: HttpClient, private router: Router,private spinner: NgxSpinnerService) { }
 
@@ -27,6 +31,9 @@ export class HomepageComponent {
     setTimeout(() => {
       this.spinner.hide();
     }, 1000);
+
+    this.getAllUserdata();
+
     const token = localStorage.getItem('token');
     if (token) {
       console.log('Token:', token);
@@ -51,11 +58,37 @@ export class HomepageComponent {
     }
   }
 
+  getAllUserdata() {
+    const url = 'https://backend-projectanidex.onrender.com/user';
+    this.http.get<UserGetRespon[]>(url).subscribe((data: UserGetRespon[]): void => {
+      if (data && data.length > 0) {
+        this.Alluserdata = data;
+      } else {
+        console.log('No user data found');
+      }
+    });
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   logOut() {
     localStorage.removeItem('token');
     this.userdata = [];
     this.router.navigateByUrl('/login');
   }
+
 }
+
 
 

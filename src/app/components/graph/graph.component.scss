@@ -5,3 +5,30 @@
     background-attachment: fixed;
     height: 100%;
 }
+ /* กำหนดให้รูปภาพเป็นวงกลม */
+ .circle-img {
+    width: 150px;
+    /* ขนาดของวงกลม */
+    height: 150px;
+    /* ขนาดของวงกลม */
+    border-radius: 50%;
+    /* ทำให้มีรูปร่างเป็นวงกลม */
+    overflow: hidden;
+    /* ทำให้ส่วนที่เกินขอบวงกลมถูกตัดทิ้ง */
+}
+
+/* กำหนดขนาดของรูปภาพ */
+.circle-img img {
+    width: 100%;
+    /* ปรับขนาดให้เต็มกับขนาดของ div */
+    height: auto;
+    /* ให้ความสูงปรับให้สอดคล้องกับความกว้าง */
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 10);
+}
+.circle-img:hover{
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgb(255, 148, 184);
+}
+
+  

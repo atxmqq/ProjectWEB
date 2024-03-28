@@ -13,11 +13,6 @@
         </div>
     </div>
 
-    <div style="display: flex; justify-content: center; margin-bottom: 20px;">
-        <button mat-button style="font-weight: bolder; font-size: 18px; color: rgb(255, 148, 184);"
-            (click)="toggleImages()">Today/Before</button>
-    </div>
-
     <div style="display: flex; flex-wrap: wrap; justify-content: center; margin-top: 15px;" *ngIf="!showPreviousImages">
         <div style="display: flex;">
             <div style="display: grid; grid-template-columns:  1fr 1fr 1fr 1fr 1fr; grid-gap: 10px;">
@@ -46,3 +41,5 @@
         </div>
     </div>
 </div>
+
+<ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "rgb(255, 148, 184)" type = "ball-clip-rotate-multiple" [fullScreen] = "true"><p style="color: rgb(255, 148, 184)" > Loading... </p></ngx-spinner>

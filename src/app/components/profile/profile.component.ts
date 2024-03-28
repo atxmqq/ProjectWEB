@@ -11,13 +11,13 @@ import { MatIconModule } from '@angular/material/icon';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-
+import { NgxSpinnerModule, NgxSpinnerService } from "ngx-spinner";
 
 
 @Component({
   selector: 'app-profile',
   standalone: true,
-  imports: [RouterLink, MatButtonModule, MatDividerModule, HttpClientModule, CommonModule, MatIconModule, FormsModule],
+  imports: [RouterLink, MatButtonModule, MatDividerModule, HttpClientModule, CommonModule, MatIconModule, FormsModule,NgxSpinnerModule],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.scss',
 })
@@ -41,10 +41,17 @@ export class ProfileComponent implements AfterViewInit {
   confirmpasswordedit: any;
 
 
-  constructor(private http: HttpClient, private router: Router) { }
+  constructor(private http: HttpClient, private router: Router,private spinner: NgxSpinnerService) { }
 
   ngOnInit() {
 
+    this.spinner.show();
+
+    setTimeout(() => {
+      /** spinner ends after 5 seconds */
+      this.spinner.hide();
+    }, 1000);
+    
     this.getImageUrl();
 
     const token = localStorage.getItem('token');

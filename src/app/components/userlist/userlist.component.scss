@@ -1,0 +1,141 @@
+ /* กำหนดให้รูปภาพเป็นวงกลม */
+ .circle-img {
+    width: 70px;
+    /* ขนาดของวงกลม */
+    height: 70px;
+    /* ขนาดของวงกลม */
+    border-radius: 50%;
+    /* ทำให้มีรูปร่างเป็นวงกลม */
+    overflow: hidden;
+    /* ทำให้ส่วนที่เกินขอบวงกลมถูกตัดทิ้ง */
+    margin-left: 10px;
+}
+
+/* กำหนดขนาดของรูปภาพ */
+.circle-img img {
+    width: 100%;
+    /* ปรับขนาดให้เต็มกับขนาดของ div */
+    height: auto;
+    /* ให้ความสูงปรับให้สอดคล้องกับความกว้าง */
+}
+
+.popup {
+    width: 400px;
+    background-color: aliceblue;
+    border-radius: 6px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.1);
+    text-align: center;
+    padding: 0 30px 30px;
+    color: #333;
+    visibility: hidden;
+    transition: transform 0.4s, top 0.4s;
+    z-index: 9999;
+    /* ให้ป้อปอัพอยู่ด้านหน้า */
+}
+
+.open-popup {
+    visibility: visible;
+    top: 50%;
+    transform: translate(-50%, -50%) scale(1);
+
+}
+
+
+.body {
+    background-image: url(/assets/img/background/MainBackground.png);
+    background-position: 0px;
+    background-size: cover;
+    background-attachment: fixed;
+    height: 100%;
+}
+
+
+.profileimg {
+    width: 13%;
+    border-radius: 50%;
+}
+
+.loader_bg{
+ position: fixed;
+ z-index: 9999;
+ background: #fff;
+ width: 100%;
+ height: 100%;
+
+}
+.loader{
+ border: 0 solid transparent;
+ border-radius:  50%;
+ width: 150px;
+ height: 150px;
+ position: absolute;
+ top: calc(50vh - 75px);
+ left: calc(50vw - 75px);
+}
+.loader:before, .loader:after{
+ content: '';
+ border: 4px solid rgb(255, 148, 184);
+ border-radius: 50%;
+ width: inherit;
+ height: inherit;
+ position: absolute;
+ top: 0;
+ left: 0;
+ animation: loader 2s linear infinite;
+ opacity: 0;
+}
+.loader::before{
+ animation-delay: .5s;
+}
+@keyframes loader{
+ 0%{
+   transform: scale(0);
+   opacity: 0;
+ }
+ 50%{
+   opacity: 1;
+ }
+ 100%{
+   transform: scale(1);
+   opacity: 0;
+ }
+}
+.user-card {
+  background-color: aliceblue;
+  width: 220px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  border-radius: 15px;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 10);
+}
+
+.user-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgb(255, 148, 184);
+}
+
+// .loader {
+// 	font-size: 150px;
+// 	background-image: linear-gradient(135deg, #fff 50%, transparent 50%);
+// 	background-size: 200% 100%;
+// 	-webkit-text-stroke-color: white;
+// 	-webkit-text-stroke-width: 0.01em;
+// 	-webkit-text-fill-color: transparent;
+// 	-webkit-background-clip: text;
+// 	font-family: "Oswald", sans-serif;
+//     text-transform: uppercase;
+// 	animation: fill 2s linear infinite;
+// }
+// @keyframes fill {
+// 	0% {
+// 		background-position: 100% 0;
+// 	}
+//     100%{
+//         background-position: 0 -100%;
+//     }
+// }

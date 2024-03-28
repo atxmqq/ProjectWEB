@@ -6,6 +6,8 @@ import { VoteComponent } from './components/vote/vote.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { Top10Component } from './components/top10/top10.component';
 import { GraphComponent } from './components/graph/graph.component';
+import { UserlistComponent } from './components/userlist/userlist.component';
+import { WatchprofileComponent } from './components/watchprofile/watchprofile.component';
 
 export const routes: Routes = [
     {
@@ -28,6 +30,13 @@ export const routes: Routes = [
     },
     {
         path: 'graph/:pid', component: GraphComponent
+    },
+    {
+        path: 'userlist', component: UserlistComponent
+    },
+    {
+        path: 'watchprofile/:uid', component: WatchprofileComponent
     }
+
 
 ];
