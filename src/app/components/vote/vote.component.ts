@@ -230,8 +230,18 @@ export class VoteComponent implements OnInit {
     const winerExpectedScore = 1 / (1 + Math.pow(10, (loseScore - winScore) / 400)); //หาค่าความคาดหวัง win
     const loserExpectedScore = 1 / (1 + Math.pow(10, (winScore - loseScore) / 400)); //หาค่าความคาดหวัง lose
 
-    const winNewscore = winScore + k_FACTOR * (1 - winerExpectedScore); //คะแนน win ใหม่
-    const loseNewscore = loseScore + k_FACTOR * (0 - loserExpectedScore); //คะแนน lose ใหม่
+    let winNewscore = winScore + k_FACTOR * (1 - winerExpectedScore); //คะแนน win ใหม่
+    let loseNewscore = loseScore + k_FACTOR * (0 - loserExpectedScore); //คะแนน lose ใหม่
+
+
+    if (winNewscore < 0) {
+      winNewscore = 0;
+    }
+    if (loseNewscore < 0) {
+      loseNewscore = 0;
+    }
+
+
 
     console.log("WinnerCal: " + winScore + " + " + k_FACTOR + " * (1 - " + winerExpectedScore + ")");
     console.log("LoserCal: " + loseScore + " + " + k_FACTOR + " * (0 - " + loserExpectedScore + ")");
