@@ -17,7 +17,7 @@ import { NgxSpinnerModule, NgxSpinnerService } from "ngx-spinner";
 @Component({
   selector: 'app-profile',
   standalone: true,
-  imports: [RouterLink, MatButtonModule, MatDividerModule, HttpClientModule, CommonModule, MatIconModule, FormsModule,NgxSpinnerModule],
+  imports: [RouterLink, MatButtonModule, MatDividerModule, HttpClientModule, CommonModule, MatIconModule, FormsModule, NgxSpinnerModule],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.scss',
 })
@@ -41,7 +41,7 @@ export class ProfileComponent implements AfterViewInit {
   confirmpasswordedit: any;
 
 
-  constructor(private http: HttpClient, private router: Router,private spinner: NgxSpinnerService) { }
+  constructor(private http: HttpClient, private router: Router, private spinner: NgxSpinnerService) { }
 
   ngOnInit() {
 
@@ -51,7 +51,7 @@ export class ProfileComponent implements AfterViewInit {
       /** spinner ends after 5 seconds */
       this.spinner.hide();
     }, 1000);
-    
+
     this.getImageUrl();
 
     const token = localStorage.getItem('token');
@@ -134,15 +134,6 @@ export class ProfileComponent implements AfterViewInit {
     if (popupProfileEdit) {
       popupProfileEdit.classList.add("open-popup");
     }
-
-    const url = `http://localhost:3000/user/${uid}`;
-    this.http.get<any>(url).subscribe((userData: any) => {
-      if (userData) {
-        console.log(userData);
-      } else {
-        console.log('No user data found');
-      }
-    });
   }
 
 
@@ -355,6 +346,8 @@ export class ProfileComponent implements AfterViewInit {
     this.http.put<any>(`https://backend-projectanidex.onrender.com/user/editProfile/${uid}`, updatedUserData)
       .toPromise()
       .then((response) => {
+        this.router.navigate(['/login']);
+
         console.log('Update successful');
 
         this.usernameedit = '';
@@ -365,6 +358,8 @@ export class ProfileComponent implements AfterViewInit {
           console.log('No file selected.');
           return;
         }
+
+
 
         const formData = new FormData();
         formData.append('file', this.file);
